@@ -16,7 +16,7 @@ Inside the `null_route.py` file there are a few variables you should configure t
 Cron Jobs allow for a server to execute scripts for every specified time.   
 
 For this script, we are going to run a cron job every 1 minute.
-- Execute `crontab -e` and in the bottom of the crontab type this cron job `* * * * * /usr/bin/python [PATH_TO_NULL_ROUTE.py]`  
+- Execute `crontab -e` and in the bottom of the crontab type this `* * * * * /usr/bin/python [PATH_TO_NULL_ROUTE.py]`  
 and replace the `[PATH_TO_NULL_ROUTE.py]` to your `null_route.py` file's path  
 - Exit and save the cron-job file with `Ctrl + X`
 
