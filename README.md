@@ -17,7 +17,7 @@ Cron Jobs allow for a server to execute scripts for every specified time.
 
 For this script, we are going to run a cron job every 10 minutes.
 - Execute `crontab -e` and in the bottom of the crontab type this cron job `*/10 * * * * python [PATH_TO_NULL_ROUTE.py]`  
-and replace the [PATH_TO_NULL_ROUTE.py] to your null_route.py file's path  
+and replace the `[PATH_TO_NULL_ROUTE.py]` to your `null_route.py` file's path  
 - Exit and save the cron-job file with `Ctrl + X`
 
 If you wish to modify the cron job timing to your liking, then this tool may help
