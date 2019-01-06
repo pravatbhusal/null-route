@@ -23,7 +23,7 @@ def is_isp_address(ip_address, isp):
         return False
 
 
-# return is an ip address is the host
+# return if an ip address is the host
 def is_host(ip_address):
     try:
         public_ip_cmd = """dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'"""
