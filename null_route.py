@@ -1,0 +1,68 @@
+import subprocess
+import requests
+import json
+
+# the security ISP your server uses for DDoS protection; do not change if the server is not using a security ISP
+secure_isp = "Cloudflare, Inc."
+
+# ports to limit using a maximum number of connections
+ports = {"47623": "100", "47624": "100", "5432": "50", "22": "50"}
+
+# size of each ip list
+ip_list_size = 10
+
+
+# return if an ip address is from an isp
+def is_isp_address(ip_address, isp):
+    try:
+        ip_info = requests.get("http://ip-api.com/json/" + ip_address).content
+        ip_info = json.loads(ip_info)
+        ip_isp = ip_info["isp"]
+        return ip_isp == isp
+    except:
+        return False
+
+
+# return is an ip address is the host
+def is_host(ip_address):
+    return ip_address == "127.0.0.1" or ip_address == "localhost"
+
+
+# return connected ips with the most connections in descending order
+def get_ip_connections(port, size):
+    list_ips_cmd = "netstat -tn 2>/dev/null | " + "grep :" + str(port) + " | " + \
+                   "awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head -" \
+                   + str(size)
+    ip_addresses = subprocess.check_output(list_ips_cmd, shell=True)
+
+    # return a parsed version of the ip addresses with the connections per ip address on top
+    return ip_addresses.split()
+
+
+# null route a malicious ip address
+def null_route(ip_address):
+    null_route_cmd = "route add " + ip_address + " gw 127.0.0.1 lo"
+    subprocess.call(null_route_cmd, shell=True)
+    # NOTE: if you wish to delete the null route later, execute "route delete ip_address"
+
+
+# analyze each ip address and its number of connections
+def analyze(port, list_size, limit):
+    ip_array = get_ip_connections(port, list_size)
+    index = 1
+    while index < len(ip_array):
+        connections = int(ip_array[index - 1])
+        ip_address = ip_array[index]
+
+        # each foreign ip address that goes over the limit gets null routed
+        if (not is_host(ip_address)) \
+                and (not is_isp_address(ip_address, secure_isp)) \
+                and connections > int(limit):
+            null_route(ip_address)
+
+        index += 2
+
+
+# analyze each port from the ports dictionary
+for key in ports:
+    analyze(port=key, list_size=ip_list_size, limit=ports[key])
