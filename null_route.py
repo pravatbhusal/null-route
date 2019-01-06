@@ -40,7 +40,7 @@ def get_ip_connections(port, size):
                    + str(size)
     ip_addresses = subprocess.check_output(list_ips_cmd, shell=True)
 
-    # return a parsed version of the ip addresses with the connections per ip address on top
+    # return a list of the ip addresses with the number of connections per ip
     return ip_addresses.split()
 
 
