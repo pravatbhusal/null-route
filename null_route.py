@@ -65,7 +65,8 @@ def analyze(port, list_size, limit):
                 and connections > int(limit):
             null_route(ip_address)
 
-        index += 2
+        next_ip_index = 2
+        index += next_ip_index
 
 
 # analyze each port from the ports dictionary
