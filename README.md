@@ -5,7 +5,7 @@ A Python null route script that limits connections on ports to prevent DDos atta
 - https://en.wikipedia.org/wiki/Null_route
 
 # Script's Configuration
-Inside the null_route.py file there are a few variables you should configure to match your server's needs.
+Inside the `null_route.py` file there are a few variables you should configure to match your server's needs.
 - The `secure_isp` string should equal to your security service's ISP
   - If you do not use a security service, then do not change the variable
 - The `ports` dictionary contains the ports you wish to limit the number of connections per IP Address
