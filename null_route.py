@@ -6,7 +6,7 @@ import json
 secure_isp = "Cloudflare, Inc."
 
 # ports to limit using a maximum number of connections
-ports = {"47623": "100", "47624": "100", "5432": "50", "22": "50"}
+ports = {"47623": 100, "47624": 100, "5432": 50, "22": 50}
 
 # size of each ip list
 ip_list_size = 10
