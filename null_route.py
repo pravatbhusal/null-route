@@ -25,7 +25,9 @@ def is_isp_address(ip_address, isp):
 
 # return is an ip address is the host
 def is_host(ip_address):
-    return ip_address == "127.0.0.1" or ip_address == "localhost"
+    public_ip_cmd = """dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'"""
+    public_ip = subprocess.check_output(public_ip_cmd, shell=True).strip()
+    return ip_address == "127.0.0.1" or ip_address == "localhost" or ip_address == public_ip
 
 
 # return connected ips with the most connections in descending order
