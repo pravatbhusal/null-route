@@ -6,8 +6,8 @@ import subprocess
 def is_isp_address(ip_address, isp):
     try:
         ip_isp_cmd = "curl -s https://www.whoismyisp.org/ip/" + ip_address + " | grep -oP " + """'\\bisp\">\\K[^<]+'"""
-        ip_isp = subprocess.check_output(ip_isp_cmd, shell=True).decode('utf-8')
-        return ip_isp in isp
+        ip_isp = subprocess.check_output(ip_isp_cmd, shell=True).decode('utf-8').strip()
+        return isp in ip_isp
     except Exception as error:
         print("Warning: Could not connect to the WhoIs API service! " + str(error))
         return False
