@@ -15,3 +15,8 @@ Inside the `config.py` file there are a few variables you should configure to ma
   - For example, if you want port 47623 to have a maximum connection per IP Address of 100, insert this into the dictionary: `"47623": 100`
 - The `secure_isp` string should equal to your security service's ISP
   - If you do not use a security service, then do not change the variable
+  
+# Exiting Program
+Since the program infinitely runs a loop every `run_interval` seconds, if you wish to see if the process is still running in the background execute `ps -fA | grep python` and check if `null_route.py` appears.  
+
+If you wish to stop or exit the program, execute `pkill -f /path/to/null_route.py`
