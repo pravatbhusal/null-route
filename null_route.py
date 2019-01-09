@@ -16,15 +16,14 @@ def is_isp_address(ip_address, isp):
         return False
 
 
-# return if an ip address is the host
-def is_host(ip_address):
+# return the host's public ip address
+def get_host():
     try:
         public_ip_cmd = """dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'"""
         public_ip = subprocess.check_output(public_ip_cmd, shell=True).strip()
-        return ip_address == "127.0.0.1" or ip_address == "localhost" or ip_address == public_ip
+        return public_ip
     except:
-        print("Warning: Could not connect to Google's Public IP API Service! Returning the is_host method to False.")
-        return False
+        return "127.0.0.1"
 
 
 # return connected ips with the most connections in descending order
@@ -50,12 +49,14 @@ def null_route(ip_address):
 def analyze(port, list_size, limit):
     ip_array = get_ip_connections(port, list_size)
     index = 1
+    host = get_host()
     while index < len(ip_array):
         connections = int(ip_array[index - 1])
         ip_address = ip_array[index]
+        is_host = ip_address == host or ip_address == "localhost" or ip_address == "127.0.0.1"
 
         # each foreign ip address that goes over the limit gets null routed
-        if (not is_host(ip_address)) \
+        if (not is_host) \
                 and (not is_isp_address(ip_address, config.secure_isp)) \
                 and connections > int(limit):
             print("Detected malicious IP Address " + ip_address + " with " + connections + " connections!")
