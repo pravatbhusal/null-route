@@ -8,4 +8,4 @@ ip_list_size = 10
 ports = {"80": 20, "8080": 20, "25": 20, "22": 20, "5432": 20, "47623": 20, "47624": 20}
 
 # the security ISP your server uses for DDoS protection; do not change if the server is not using a security ISP
-secure_isp = "Cloudflare, Inc."
+secure_isp = "Cloudflare"
