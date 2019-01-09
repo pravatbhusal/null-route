@@ -11,8 +11,8 @@ def is_isp_address(ip_address, isp):
         ip_info = json.loads(ip_info)
         ip_isp = ip_info["isp"]
         return ip_isp == isp
-    except:
-        print("Warning: Could not connect to the ip-api.com API service! Returning the is_isp method to False.")
+    except Exception as error:
+        print("Warning: Could not connect to the ip-api.com API service! " + str(error))
         return False
 
 
@@ -22,7 +22,8 @@ def get_host():
         public_ip_cmd = """dig TXT +short o-o.myaddr.l.google.com @ns1.google.com | awk -F'"' '{ print $2}'"""
         public_ip = subprocess.check_output(public_ip_cmd, shell=True).strip()
         return public_ip
-    except:
+    except Exception as error:
+        print("Warning: Could not connect to Google's Public IP API Service! " + str(error))
         return "127.0.0.1"
 
 
