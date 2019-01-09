@@ -1,8 +1,11 @@
 # Null Route
-A Python null route script that limits connections on ports to prevent DDos attacks. This script is oriented towards a Unix environment, specifically a Debian-based Linux distribution.
+A Python null route program that limits connections on ports to prevent DDos attacks. This program is oriented towards a Unix environment, specifically a Debian-based Linux distribution.
 
 ### Learn more about Null Routing
 - https://en.wikipedia.org/wiki/Null_route
+
+# Dependencies
+Install the dependencies for the project with `pip install -r requirements.txt`
 
 # Configuration
 Inside the `config.py` file there are a few variables you should configure to match your server's needs.
