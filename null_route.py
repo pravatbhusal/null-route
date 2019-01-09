@@ -78,7 +78,7 @@ def run_script():
     while True:
         print("Analyzing each port for malicious IP Addresses...")
         analyze_ports()
-        print("Finished analysis. Analyzing ports again in " + config.run_interval + " seconds.")
+        print("Finished analysis. Analyzing ports again in " + str(config.run_interval) + " seconds.")
         print("Use Ctrl+C or 'pkill -f /path/to/null_route.py' if you wish to stop this script from running.")
         time.sleep(config.run_interval)
 
