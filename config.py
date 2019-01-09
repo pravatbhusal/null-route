@@ -2,7 +2,7 @@
 run_interval = 5
 
 # size of each ip list
-ip_list_size = 10
+ip_list_size = 3
 
 # ports to limit using a maximum number of connections
 ports = {"80": 20, "8080": 20, "25": 20, "22": 20, "5432": 20, "47623": 20, "47624": 20}
