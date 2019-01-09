@@ -1,5 +1,5 @@
 # Null Route
-A Python null route program that limits connections on ports to prevent DDos attacks. This program is oriented towards a Unix environment, specifically a Debian-based Linux distribution.
+A Python null route program that limits connections on ports to prevent DDos attacks. This program is oriented towards a Unix environment, preferably a Debian-based Linux distribution.
 
 ### Learn more about Null Routing
 - https://en.wikipedia.org/wiki/Null_route
