@@ -1,14 +1,13 @@
 import config
 import subprocess
 import requests
-import json
 
 
 # return if an ip address is from an isp
 def is_isp_address(ip_address, isp):
     try:
-        ip_info = requests.get("http://ip-api.com/json/" + ip_address).content.decode('utf-8')
-        ip_info = json.loads(ip_info)
+        ip_api = "http://ip-api.com/json/" + ip_address
+        ip_info = requests.get(ip_api).json()
         ip_isp = ip_info["isp"]
         return ip_isp == isp
     except Exception as error:
@@ -52,7 +51,7 @@ def analyze(port, list_size, limit):
     index = 1
     while index < len(ip_array):
         connections = int(ip_array[index - 1])
-        ip_address = str(ip_array[index])
+        ip_address = ip_array[index].decode('utf-8')
         is_host = ip_address == host or ip_address == "localhost" or ip_address == "127.0.0.1"
 
         # each foreign ip address that goes over the limit gets null routed
