@@ -49,7 +49,6 @@ def null_route(ip_address):
 def analyze(port, list_size, limit):
     ip_array = get_ip_connections(port, list_size)
     index = 1
-    host = get_host()
     while index < len(ip_array):
         connections = int(ip_array[index - 1])
         ip_address = ip_array[index]
@@ -84,4 +83,5 @@ def run_script():
         time.sleep(config.run_interval)
 
 
+host = get_host()
 run_script()
