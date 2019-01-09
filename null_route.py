@@ -1,15 +1,7 @@
+import config
 import subprocess
 import requests
 import json
-
-# the security ISP your server uses for DDoS protection; do not change if the server is not using a security ISP
-secure_isp = "Cloudflare, Inc."
-
-# ports to limit using a maximum number of connections
-ports = {"80": 20, "8080": 20, "25": 20, "22": 20, "5432": 20, "47623": 20, "47624": 20}
-
-# size of each ip list
-ip_list_size = 10
 
 
 # return if an ip address is from an isp
@@ -20,6 +12,7 @@ def is_isp_address(ip_address, isp):
         ip_isp = ip_info["isp"]
         return ip_isp == isp
     except:
+        print("Warning: Could not connect to the ip-api.com API service! Returning the is_isp method to False.")
         return False
 
 
@@ -30,6 +23,7 @@ def is_host(ip_address):
         public_ip = subprocess.check_output(public_ip_cmd, shell=True).strip()
         return ip_address == "127.0.0.1" or ip_address == "localhost" or ip_address == public_ip
     except:
+        print("Warning: Could not connect to Google's Public IP API Service! Returning the is_host method to False.")
         return False
 
 
@@ -46,9 +40,10 @@ def get_ip_connections(port, size):
 
 # null route a malicious ip address
 def null_route(ip_address):
+    print("Null Routing malicious IP Address " + ip_address + ". If you wish to delete the " +
+          "the null route later, execute 'route delete " + ip_address + "'")
     null_route_cmd = "route add " + ip_address + " gw 127.0.0.1 lo"
     subprocess.call(null_route_cmd, shell=True)
-    # NOTE: if you wish to delete the null route later, execute "route delete ip_address"
 
 
 # analyze each ip address and its number of connections
@@ -61,8 +56,9 @@ def analyze(port, list_size, limit):
 
         # each foreign ip address that goes over the limit gets null routed
         if (not is_host(ip_address)) \
-                and (not is_isp_address(ip_address, secure_isp)) \
+                and (not is_isp_address(ip_address, config.secure_isp)) \
                 and connections > int(limit):
+            print("Detected malicious IP Address " + ip_address + " with " + connections + " connections!")
             null_route(ip_address)
 
         next_ip_index = 2
@@ -70,5 +66,21 @@ def analyze(port, list_size, limit):
 
 
 # analyze each port from the ports dictionary
-for key in ports:
-    analyze(port=key, list_size=ip_list_size, limit=ports[key])
+def analyze_ports():
+    for key in config.ports:
+        analyze(port=key, list_size=config.ip_list_size, limit=config.ports[key])
+
+
+# run this script every "run_interval" seconds from the config.py file
+def run_script():
+    import time
+    print("Null Route script initiated!")
+    while True:
+        print("Analyzing each port for malicious IP Addresses...")
+        analyze_ports()
+        print("Finished analysis. Analyzing ports again in " + config.run_interval + " seconds.")
+        print("Use Ctrl+C or 'pkill -f /path/to/null_route.py' if you wish to stop this script from running.")
+        time.sleep(config.run_interval)
+
+
+run_script()
