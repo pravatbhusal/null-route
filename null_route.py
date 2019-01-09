@@ -1,28 +1,15 @@
 import config
 import subprocess
-<<<<<<< HEAD
-=======
-import requests
->>>>>>> master
 
 
 # return if an ip address is from an isp
 def is_isp_address(ip_address, isp):
     try:
-<<<<<<< HEAD
         ip_isp_cmd = "curl -s https://www.whoismyisp.org/ip/" + ip_address + " | grep -oP " + """'\\bisp\">\\K[^<]+'"""
         ip_isp = subprocess.check_output(ip_isp_cmd, shell=True).decode('utf-8')
         return ip_isp in isp
     except Exception as error:
         print("Warning: Could not connect to the WhoIs API service! " + str(error))
-=======
-        ip_api = "http://ip-api.com/json/" + ip_address
-        ip_info = requests.get(ip_api).json()
-        ip_isp = ip_info["isp"]
-        return ip_isp == isp
-    except Exception as error:
-        print("Warning: Could not connect to the ip-api.com API service! " + str(error))
->>>>>>> master
         return False
 
 
@@ -95,8 +82,4 @@ def run_script():
 
 
 host = get_host()
-<<<<<<< HEAD
 run_script()
-=======
-run_script()
->>>>>>> master
