@@ -6,6 +6,3 @@ ip_list_size = 25
 
 # maximum amount of connections per ip address
 limit = 20
-
-# the security ISP your server uses for DDoS protection; do not change if the server is not using a security ISP
-secure_isp = "Cloudflare"

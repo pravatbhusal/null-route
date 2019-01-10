@@ -1,16 +1,6 @@
 import config
 import subprocess
-
-
-# return if an ip address is from an isp
-def is_isp_address(ip_address, isp):
-    try:
-        ip_isp_cmd = "curl -s https://www.whoismyisp.org/ip/" + ip_address + " | grep -oP " + """'\\bisp\">\\K[^<]+'"""
-        ip_isp = subprocess.check_output(ip_isp_cmd, shell=True).decode('utf-8')
-        return isp in ip_isp
-    except Exception as error:
-        print("Warning: Could not connect to the WhoIs API service! " + str(error))
-        return False
+from is_cloudflare import ip_in_cloudflare_range
 
 
 # return the host's public ip address
@@ -54,7 +44,7 @@ def analyze(list_size, limit):
 
         # each foreign ip address that goes over the limit gets null routed
         if (not is_host) \
-                and (not is_isp_address(ip_address, config.secure_isp)) \
+                and (not ip_in_cloudflare_range(ip_address)) \
                 and connections > int(limit):
             print("Detected malicious IP Address " + ip_address + " with " + str(connections) + " connections!")
             null_route(ip_address)
