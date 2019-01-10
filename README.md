@@ -20,4 +20,4 @@ To run the program, execute `nohup python null_route.py`
 # Exiting Program
 Since the program infinitely runs a loop every `run_interval` seconds, if you wish to see if the process is still running in the background execute `ps -fA | grep python` and check if `null_route.py` appears.  
 
-If you wish to stop or exit the program, execute `pkill -f /path/to/null_route.py`
+If you wish to stop or exit the program, execute `pkill -f null_route.py`
