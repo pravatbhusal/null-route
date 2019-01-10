@@ -12,8 +12,6 @@ Inside the `config.py` file there are a few variables you should configure to ma
 - The `run_interval` integer is the interval the null_route.py runs every second
 - The `ip_list_size` integer is the size of the IP list that the `get_ip_connections` method returns
 - The `limit` integer is the limit to the number of connections per ip address
-- The `secure_isp` string should equal to your security service's ISP
-  - If you do not use a security service, then do not change the variable
   
 # Running Program
 To run the program, execute `nohup python null_route.py`
