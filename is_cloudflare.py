@@ -9,7 +9,7 @@ def get_cloudflare_ipv4_ranges():
         ip_ranges = str(subprocess.check_output(ip_ranges_cmd, shell=True).decode('utf-8')).split()
         return ip_ranges
     except Exception as error:
-        print("Could not receive the ipv4 addresses from cloudflare! " + error)
+        print("Warning: Could not receive the ipv4 addresses from cloudflare! " + error)
         return []
 
 
