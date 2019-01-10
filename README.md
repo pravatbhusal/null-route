@@ -16,6 +16,10 @@ Inside the `config.py` file there are a few variables you should configure to ma
 - The `secure_isp` string should equal to your security service's ISP
   - If you do not use a security service, then do not change the variable
   
+# Running Program
+To run the program, execute `nohup python null_route.py`
+- The `nohup` package is necessary for the program to run even outside SSH sessions
+
 # Exiting Program
 Since the program infinitely runs a loop every `run_interval` seconds, if you wish to see if the process is still running in the background execute `ps -fA | grep python` and check if `null_route.py` appears.  
 
