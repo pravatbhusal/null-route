@@ -56,7 +56,7 @@ def analyze(port, list_size, limit):
         if (not is_host) \
                 and (not is_isp_address(ip_address, config.secure_isp)) \
                 and connections > int(limit):
-            print("Detected malicious IP Address " + ip_address + " with " + connections + " connections!")
+            print("Detected malicious IP Address " + ip_address + " with " + str(connections) + " connections!")
             null_route(ip_address)
 
         next_ip_index = 2
