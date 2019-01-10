@@ -25,10 +25,11 @@ def get_host():
 
 
 # return connected ips with the most connections in descending order
-def get_ip_connections(port, size):
-    list_ips_cmd = "netstat -tn 2>/dev/null | " + "grep :" + str(port) + " | " + \
-                   "awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head -" \
+def get_ip_connections(size):
+    list_ips_cmd = "netstat -tn 2>/dev/null " + \
+                   "| awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head -" \
                    + str(size)
+    print(list_ips_cmd)
     ip_addresses = subprocess.check_output(list_ips_cmd, shell=True)
 
     # return a list of the ip addresses with the number of connections per ip
@@ -44,8 +45,8 @@ def null_route(ip_address):
 
 
 # analyze each ip address and its number of connections
-def analyze(port, list_size, limit):
-    ip_array = get_ip_connections(port, list_size)
+def analyze(list_size, limit):
+    ip_array = get_ip_connections(list_size)
     index = 1
     while index < len(ip_array):
         connections = int(ip_array[index - 1])
@@ -63,21 +64,15 @@ def analyze(port, list_size, limit):
         index += next_ip_index
 
 
-# analyze each port from the ports dictionary
-def analyze_ports():
-    for key in config.ports:
-        analyze(port=key, list_size=config.ip_list_size, limit=config.ports[key])
-
-
 # run this script every "run_interval" seconds from the config.py file
 def run_script():
     import time
     print("Null Route script initiated!")
-    print("Use Ctrl+C or 'pkill -f /path/to/null_route.py' if you wish to stop this script from running.")
+    print("Use Ctrl+C or 'pkill -f /path/to/null_route.py' to stop the script.")
     while True:
-        print("Analyzing each port for malicious IP Addresses...")
-        analyze_ports()
-        print("Finished analysis. Analyzing ports again in " + str(config.run_interval) + " seconds.")
+        print("Analyzing for malicious IP Addresses...")
+        analyze(list_size=config.ip_list_size, limit=config.limit)
+        print("Finished analysis. Analyzing again in " + str(config.run_interval) + " seconds.")
         time.sleep(config.run_interval)
 
 
