@@ -29,7 +29,6 @@ def get_ip_connections(size):
     list_ips_cmd = "netstat -tn 2>/dev/null " + \
                    "| awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | head -" \
                    + str(size)
-    print(list_ips_cmd)
     ip_addresses = subprocess.check_output(list_ips_cmd, shell=True)
 
     # return a list of the ip addresses with the number of connections per ip
