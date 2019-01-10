@@ -4,9 +4,6 @@ A Python null route program that limits connections on ports to prevent DDos att
 ### Learn more about Null Routing
 - https://en.wikipedia.org/wiki/Null_route
 
-# Dependencies
-Install the dependencies for the project with `pip install -r requirements.txt`
-
 # Configuration
 Inside the `config.py` file there are a few variables you should configure to match your server's needs.
 - The `run_interval` integer is the interval the null_route.py runs every second
